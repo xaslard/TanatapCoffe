@@ -1,0 +1,1722 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tanatap Coffee - Urban Hidden Garden meets Great Caffeine</title>
+    <link href="https://cdn.jsdelivr.net/npm/fontsource-inter@5.0.19/index.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/fontsource-playfair-display@5.0.19/index.css" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #F5F1E8;
+            --cream-dark: #E8E0D0;
+            --green: #2D5A3D;
+            --green-light: #3A7350;
+            --green-dark: #1E3F2B;
+            --brown: #8B5A2B;
+            --brown-light: #A4703A;
+            --dark: #1A1A1A;
+            --white: #FFFFFF;
+            --gray: #6B6B6B;
+            --gray-light: #E0D9CC;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-hover: 0 8px 30px rgba(0,0,0,0.15);
+            --shadow-lg: 0 12px 40px rgba(0,0,0,0.2);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+            --bg-primary: #F5F1E8;
+            --bg-secondary: #FFFFFF;
+            --bg-card: #FFFFFF;
+            --bg-concept: #1E3F2B;
+            --bg-booking: #1E3F2B;
+            --bg-footer: #1A1A1A;
+            --text-primary: #1A1A1A;
+            --text-secondary: #6B6B6B;
+            --text-muted: rgba(255,255,255,0.7);
+            --border-color: #E0D9CC;
+            --card-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --card-shadow-hover: 0 8px 30px rgba(0,0,0,0.15);
+            --nav-bg: rgba(245, 241, 232, 0.92);
+            --star-color: #F5A623;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #121212;
+            --bg-secondary: #1E1E1E;
+            --bg-card: #1E1E1E;
+            --bg-concept: #0D1F14;
+            --bg-booking: #0D1F14;
+            --bg-footer: #0A0A0A;
+            --text-primary: #E8E0D0;
+            --text-secondary: #A89B8C;
+            --text-muted: rgba(255,255,255,0.6);
+            --border-color: #2A2A2A;
+            --card-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            --card-shadow-hover: 0 8px 30px rgba(0,0,0,0.5);
+            --nav-bg: rgba(18, 18, 18, 0.95);
+            --cream: #121212;
+            --cream-dark: #1E1E1E;
+            --gray: #A89B8C;
+            --gray-light: #2A2A2A;
+            --white: #1E1E1E;
+            --dark: #E8E0D0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+        body.modal-open, body.booking-open { overflow: hidden; }
+
+        h1, h2, h3, h4, h5 { font-family: 'Playfair Display', Georgia, serif; line-height: 1.3; }
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; display: block; }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+        .section-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: var(--green); color: #fff;
+            padding: 8px 18px; border-radius: 28px;
+            font-size: 0.78rem; font-weight: 700;
+            letter-spacing: 1.2px; text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+        .section-title {
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            color: var(--green); text-align: center; margin-bottom: 14px;
+        }
+        .section-subtitle {
+            text-align: center; color: var(--text-secondary); font-size: 1.05rem;
+            max-width: 620px; margin: 0 auto 50px;
+        }
+
+        /* NAVIGATION */
+        header {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: var(--nav-bg);
+            backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+        header.scrolled { box-shadow: 0 2px 16px rgba(0,0,0,0.1); }
+
+        nav {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px 24px; max-width: 1280px; margin: 0 auto;
+        }
+        .logo {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.5rem; font-weight: 700; color: var(--green);
+        }
+        .logo span { color: var(--brown); }
+
+        .nav-links { display: flex; list-style: none; gap: 22px; align-items: center; }
+        .nav-links a {
+            font-size: 0.85rem; font-weight: 500; color: var(--text-primary);
+            transition: var(--transition); position: relative; padding: 4px 0;
+        }
+        .nav-links a:hover { color: var(--green); }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -2px; left: 0;
+            width: 0; height: 2px; background: var(--green); transition: var(--transition);
+        }
+        .nav-links a:hover::after { width: 100%; }
+
+        .nav-booking {
+            background: var(--green) !important; color: #fff !important;
+            padding: 10px 24px !important; border-radius: 28px !important;
+            font-weight: 600 !important; font-size: 0.85rem !important;
+        }
+        .nav-booking:hover { background: var(--green-light) !important; transform: translateY(-1px); }
+        .nav-booking::after { display: none !important; }
+
+        .theme-toggle {
+            width: 38px; height: 38px; border-radius: 50%;
+            border: 2px solid var(--border-color); background: var(--bg-secondary);
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; transition: var(--transition);
+        }
+        .theme-toggle:hover { border-color: var(--green); transform: rotate(180deg); }
+
+        .hamburger {
+            display: none; flex-direction: column; cursor: pointer;
+            gap: 5px; background: none; border: none; padding: 8px;
+        }
+        .hamburger span {
+            display: block; width: 24px; height: 2.5px;
+            background: var(--text-primary); border-radius: 2px; transition: var(--transition);
+        }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
+
+        .mobile-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 998; }
+        .mobile-overlay.active { display: block; }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center;
+            padding: 100px 0 60px; position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: -40%; right: -15%;
+            width: 700px; height: 700px;
+            background: radial-gradient(circle, rgba(45,90,61,0.07) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .hero::after {
+            content: ''; position: absolute; bottom: -30%; left: -10%;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(139,90,43,0.06) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-grid {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 60px; align-items: center; position: relative; z-index: 2;
+        }
+        .hero-content h1 {
+            font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+            color: var(--green); margin-bottom: 18px; line-height: 1.15;
+        }
+        .hero-content h1 em { color: var(--brown); }
+        .hero-content p {
+            font-size: 1.08rem; color: var(--text-secondary);
+            margin-bottom: 32px; max-width: 520px;
+        }
+        .hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
+
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 14px 28px; border-radius: 28px;
+            font-weight: 600; font-size: 0.92rem;
+            border: none; cursor: pointer; transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-primary { background: var(--green); color: #fff; }
+        .btn-primary:hover { background: var(--green-light); transform: translateY(-2px); box-shadow: var(--card-shadow-hover); }
+        .btn-outline { background: transparent; color: var(--green); border: 2px solid var(--green); }
+        .btn-outline:hover { background: var(--green); color: #fff; }
+
+        .hero-images { position: relative; }
+        .hero-main-img {
+            border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-lg);
+        }
+        .hero-main-img img { width: 100%; height: 480px; object-fit: cover; }
+        .hero-floating-img {
+            position: absolute; bottom: -30px; left: -30px;
+            width: 220px; height: 160px; border-radius: var(--radius);
+            overflow: hidden; border: 5px solid var(--bg-primary); box-shadow: var(--shadow);
+        }
+        .hero-floating-img img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* ABOUT */
+        .about { padding: 90px 0; background: var(--bg-secondary); }
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; }
+        .about-content h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); color: var(--green); margin-bottom: 22px; }
+        .about-content p { color: var(--text-secondary); margin-bottom: 14px; font-size: 1rem; }
+        .about-quote {
+            background: var(--bg-primary); border-left: 4px solid var(--green);
+            padding: 22px 26px; margin: 24px 0;
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+        .about-quote p { font-style: italic; color: var(--text-primary); font-size: 1.05rem; margin-bottom: 6px; }
+        .about-quote cite { color: var(--green); font-weight: 600; font-style: normal; font-size: 0.88rem; }
+
+        .stats-row { display: flex; gap: 16px; margin-top: 36px; }
+        .stat-card {
+            flex: 1; text-align: center; padding: 20px 12px;
+            background: var(--bg-primary); border-radius: var(--radius-sm);
+        }
+        .stat-card h3 { font-size: 1.8rem; color: var(--green); margin-bottom: 2px; }
+        .stat-card p { font-size: 0.8rem; color: var(--text-secondary); margin: 0; }
+
+        .about-img { border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-lg); }
+        .about-img img { width: 100%; height: 480px; object-fit: cover; }
+
+        /* CONCEPT */
+        .concept { padding: 90px 0; background: var(--bg-concept); color: #fff; }
+        .concept .section-badge { background: rgba(255,255,255,0.15); }
+        .concept .section-title { color: #fff; }
+        .concept .section-subtitle { color: var(--text-muted); }
+
+        .concept-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; }
+        .concept-card {
+            background: rgba(255,255,255,0.08); backdrop-filter: blur(8px);
+            padding: 32px 26px; border-radius: var(--radius);
+            border: 1px solid rgba(255,255,255,0.1); transition: var(--transition);
+        }
+        .concept-card:hover { background: rgba(255,255,255,0.14); transform: translateY(-4px); }
+        .concept-icon { font-size: 2.2rem; margin-bottom: 14px; }
+        .concept-card h3 { font-size: 1.12rem; margin-bottom: 8px; font-family: 'Inter', sans-serif; font-weight: 700; }
+        .concept-card p { font-size: 0.9rem; color: rgba(255,255,255,0.75); line-height: 1.6; }
+
+        /* MENU */
+        .menu { padding: 90px 0; }
+        .menu-tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 44px; flex-wrap: wrap; }
+        .menu-tab {
+            padding: 10px 24px; border: 2px solid var(--border-color); background: transparent;
+            border-radius: 28px; font-weight: 600; font-size: 0.88rem;
+            cursor: pointer; transition: var(--transition); font-family: 'Inter', sans-serif;
+            color: var(--text-primary);
+        }
+        .menu-tab.active, .menu-tab:hover { background: var(--green); color: #fff; border-color: var(--green); }
+
+        .menu-category { display: none; }
+        .menu-category.active { display: block; }
+
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 28px; }
+        .menu-card {
+            background: var(--bg-card); border-radius: var(--radius);
+            overflow: hidden; box-shadow: var(--card-shadow); transition: var(--transition);
+        }
+        .menu-card:hover { transform: translateY(-6px); box-shadow: var(--card-shadow-hover); }
+        .menu-card-img { height: 200px; overflow: hidden; position: relative; background: var(--cream-dark); }
+        .menu-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .menu-card:hover .menu-card-img img { transform: scale(1.08); }
+        .menu-card-body { padding: 20px; }
+        .menu-card-body h3 { font-size: 1.1rem; color: var(--text-primary); margin-bottom: 4px; }
+        .menu-card-body .price { font-size: 1.05rem; font-weight: 700; color: var(--green); }
+        .menu-card-body .desc { font-size: 0.85rem; color: var(--text-secondary); margin-top: 6px; }
+
+        .menu-note {
+            text-align: center; margin-top: 40px; padding: 18px 24px;
+            background: var(--bg-card); border-radius: var(--radius);
+            font-size: 0.92rem; color: var(--text-secondary); border: 1px solid var(--border-color);
+        }
+        .menu-note strong { color: var(--green); }
+
+        /* GALLERY */
+        .gallery { padding: 90px 0; background: var(--bg-secondary); }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: 250px;
+            gap: 16px;
+        }
+        .gallery-item {
+            border-radius: var(--radius); overflow: hidden; cursor: pointer;
+            position: relative; box-shadow: var(--card-shadow);
+        }
+        .gallery-item img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .gallery-item:hover img { transform: scale(1.08); }
+        .gallery-item::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 50%);
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        .gallery-item:hover::after { opacity: 1; }
+        .gallery-item .gallery-caption {
+            position: absolute; bottom: 16px; left: 16px; right: 16px;
+            color: #fff; z-index: 2; font-weight: 600; font-size: 0.9rem;
+            opacity: 0; transform: translateY(10px); transition: all 0.3s ease;
+        }
+        .gallery-item:hover .gallery-caption { opacity: 1; transform: translateY(0); }
+
+        .gallery-item.wide { grid-column: span 2; }
+        .gallery-item.tall { grid-row: span 2; }
+
+        .lightbox {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.92);
+            z-index: 3000; display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden; transition: all 0.35s ease; padding: 40px;
+        }
+        .lightbox.active { opacity: 1; visibility: visible; }
+        .lightbox img {
+            max-width: 90%; max-height: 85vh; object-fit: contain;
+            border-radius: var(--radius); box-shadow: var(--shadow-lg);
+        }
+        .lightbox-close {
+            position: absolute; top: 20px; right: 20px;
+            width: 48px; height: 48px; background: rgba(255,255,255,0.15);
+            border: none; border-radius: 50%; color: #fff;
+            font-size: 1.5rem; cursor: pointer; transition: var(--transition);
+        }
+        .lightbox-close:hover { background: rgba(255,255,255,0.3); }
+        .lightbox-nav {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            width: 48px; height: 48px; background: rgba(255,255,255,0.15);
+            border: none; border-radius: 50%; color: #fff;
+            font-size: 1.5rem; cursor: pointer; transition: var(--transition);
+        }
+        .lightbox-nav:hover { background: rgba(255,255,255,0.3); }
+        .lightbox-prev { left: 20px; }
+        .lightbox-next { right: 20px; }
+        .lightbox-counter {
+            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+            color: rgba(255,255,255,0.7); font-size: 0.9rem;
+        }
+
+        /* REVIEWS */
+        .reviews { padding: 90px 0; }
+
+        .reviews-summary {
+            display: flex; align-items: center; justify-content: center;
+            gap: 40px; margin-bottom: 50px; padding: 30px;
+            background: var(--bg-card); border-radius: var(--radius);
+            box-shadow: var(--card-shadow);
+            flex-wrap: wrap;
+        }
+        .reviews-avg {
+            text-align: center;
+        }
+        .reviews-avg .big-number {
+            font-size: 3.5rem; font-weight: 800; color: var(--green);
+            font-family: 'Inter', sans-serif; line-height: 1;
+        }
+        .reviews-avg .stars-big {
+            font-size: 1.4rem; color: var(--star-color);
+            margin: 6px 0 4px; letter-spacing: 2px;
+        }
+        .reviews-avg .total-reviews {
+            font-size: 0.85rem; color: var(--text-secondary);
+        }
+
+        .reviews-bars {
+            display: flex; flex-direction: column; gap: 8px; min-width: 240px;
+        }
+        .review-bar-row {
+            display: flex; align-items: center; gap: 10px;
+        }
+        .review-bar-label {
+            font-size: 0.82rem; font-weight: 600; color: var(--text-secondary);
+            min-width: 50px; text-align: right;
+        }
+        .review-bar-track {
+            flex: 1; height: 8px; background: var(--gray-light);
+            border-radius: 4px; overflow: hidden;
+        }
+        .review-bar-fill {
+            height: 100%; background: var(--star-color);
+            border-radius: 4px; transition: width 1s ease;
+        }
+        .review-bar-count {
+            font-size: 0.78rem; color: var(--text-secondary); min-width: 28px;
+        }
+
+        .reviews-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 24px;
+        }
+
+        .review-card {
+            background: var(--bg-card); border-radius: var(--radius);
+            padding: 28px; box-shadow: var(--card-shadow);
+            transition: var(--transition); position: relative;
+            border: 1px solid var(--border-color);
+        }
+        .review-card:hover {
+            transform: translateY(-4px); box-shadow: var(--card-shadow-hover);
+        }
+
+        .review-card-header {
+            display: flex; align-items: center; gap: 14px; margin-bottom: 16px;
+        }
+        .review-avatar {
+            width: 50px; height: 50px; border-radius: 50%;
+            overflow: hidden; flex-shrink: 0;
+            background: var(--green); display: flex; align-items: center; justify-content: center;
+            color: #fff; font-weight: 700; font-size: 1.2rem;
+        }
+        .review-avatar img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+        .review-author-info { flex: 1; }
+        .review-author-name {
+            font-weight: 700; font-size: 0.95rem; color: var(--text-primary);
+        }
+        .review-author-meta {
+            font-size: 0.78rem; color: var(--text-secondary);
+            display: flex; align-items: center; gap: 8px; margin-top: 2px;
+        }
+        .review-badge {
+            display: inline-flex; align-items: center; gap: 3px;
+            background: #E8F5E9; color: #2E7D32;
+            padding: 2px 8px; border-radius: 10px;
+            font-size: 0.7rem; font-weight: 600;
+        }
+
+        .review-stars {
+            font-size: 0.95rem; color: var(--star-color);
+            letter-spacing: 2px; margin-bottom: 12px;
+        }
+
+        .review-text {
+            font-size: 0.92rem; color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .review-card-footer {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-top: 16px; padding-top: 16px;
+            border-top: 1px solid var(--border-color);
+        }
+        .review-branch-tag {
+            font-size: 0.78rem; color: var(--green);
+            font-weight: 600; display: flex; align-items: center; gap: 4px;
+        }
+        .review-like-btn {
+            background: none; border: none; cursor: pointer;
+            font-size: 0.82rem; color: var(--text-secondary);
+            display: flex; align-items: center; gap: 4px;
+            transition: var(--transition);
+        }
+        .review-like-btn:hover { color: #E74C3C; }
+        .review-like-btn.liked { color: #E74C3C; }
+
+        .review-quote-icon {
+            position: absolute; top: 20px; right: 24px;
+            font-size: 2.5rem; color: var(--border-color); opacity: 0.5;
+            font-family: Georgia, serif; line-height: 1;
+        }
+
+        .load-more-wrap {
+            text-align: center; margin-top: 40px;
+        }
+
+        /* BRANCHES */
+        .branches { padding: 90px 0; background: var(--bg-secondary); }
+        .branches-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 28px;
+        }
+        .branch-card {
+            background: var(--bg-card); border-radius: var(--radius);
+            overflow: hidden; cursor: pointer; transition: var(--transition);
+            position: relative; border: 2px solid transparent;
+        }
+        .branch-card:hover { transform: translateY(-6px); box-shadow: var(--card-shadow-hover); border-color: var(--green); }
+        .branch-card.closing { border-color: #E74C3C; }
+
+        .closing-badge {
+            position: absolute; top: 14px; right: 14px;
+            background: #E74C3C; color: #fff;
+            padding: 5px 14px; border-radius: 20px;
+            font-size: 0.72rem; font-weight: 700; z-index: 3;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+
+        .branch-img { height: 190px; overflow: hidden; background: var(--cream-dark); }
+        .branch-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .branch-card:hover .branch-img img { transform: scale(1.08); }
+
+        .branch-body { padding: 22px; }
+        .branch-body h3 { font-size: 1.25rem; color: var(--green); margin-bottom: 6px; }
+        .branch-body .b-address {
+            font-size: 0.86rem; color: var(--text-secondary);
+            display: flex; align-items: flex-start; gap: 6px; margin-bottom: 8px;
+        }
+        .branch-body .b-hours {
+            font-size: 0.88rem; color: var(--text-primary); font-weight: 600;
+            display: flex; align-items: center; gap: 6px; margin-bottom: 4px;
+        }
+        .branch-body .b-wa {
+            font-size: 0.82rem; color: #25D366; font-weight: 600;
+            display: flex; align-items: center; gap: 6px; margin-bottom: 12px;
+        }
+        .branch-body .view-detail {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: var(--green); font-weight: 600; font-size: 0.88rem; margin-top: 4px;
+        }
+        .branch-body .view-detail span { transition: transform 0.3s ease; }
+        .branch-card:hover .branch-body .view-detail span { transform: translateX(4px); }
+
+        .open-badge {
+            display: inline-flex; align-items: center; gap: 4px;
+            background: #E8F5E9; color: #2E7D32;
+            padding: 3px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;
+        }
+        .closed-badge {
+            display: inline-flex; align-items: center; gap: 4px;
+            background: #FFEBEE; color: #C62828;
+            padding: 3px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;
+        }
+
+        /* BRANCH MODAL */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.65);
+            z-index: 2000; display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden; transition: all 0.35s ease; padding: 20px;
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-content {
+            background: var(--bg-card); border-radius: var(--radius);
+            max-width: 700px; width: 100%; max-height: 90vh; overflow-y: auto;
+            transform: translateY(25px) scale(0.96); transition: transform 0.35s ease;
+            position: relative;
+        }
+        .modal-overlay.active .modal-content { transform: translateY(0) scale(1); }
+        .modal-close {
+            position: absolute; top: 14px; right: 14px;
+            width: 38px; height: 38px; background: var(--bg-card);
+            border: none; border-radius: 50%; font-size: 1.2rem;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            z-index: 10; box-shadow: var(--shadow); transition: var(--transition);
+            color: var(--text-primary);
+        }
+        .modal-close:hover { background: var(--bg-primary); transform: rotate(90deg); }
+        .modal-img { width: 100%; height: 260px; object-fit: cover; border-radius: var(--radius) var(--radius) 0 0; background: var(--cream-dark); }
+        .modal-body { padding: 30px; }
+        .modal-body h2 { font-size: 1.7rem; color: var(--green); margin-bottom: 8px; }
+
+        .modal-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+        .modal-info-card {
+            background: var(--bg-primary); border-radius: var(--radius-sm);
+            padding: 16px; display: flex; align-items: flex-start; gap: 12px;
+        }
+        .modal-info-icon {
+            width: 40px; height: 40px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; flex-shrink: 0;
+        }
+        .modal-info-icon.mi-address { background: #E3F2FD; }
+        .modal-info-icon.mi-hours { background: #FFF3E0; }
+        .modal-info-icon.mi-wa { background: #E8F5E9; }
+        .modal-info-icon.mi-phone { background: #F3E5F5; }
+        .modal-info-card h4 {
+            font-size: 0.75rem; color: var(--text-secondary);
+            font-family: 'Inter', sans-serif; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;
+        }
+        .modal-info-card p { font-size: 0.88rem; color: var(--text-primary); font-weight: 500; line-height: 1.4; }
+        .modal-info-card a { color: var(--green); font-weight: 600; }
+
+        .modal-map { width: 100%; height: 260px; border-radius: 12px; border: 0; margin-bottom: 20px; background: var(--cream-dark); }
+        .modal-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+        .modal-btn {
+            padding: 12px 22px; border-radius: 28px; font-weight: 600;
+            font-size: 0.88rem; border: none; cursor: pointer;
+            transition: var(--transition); display: inline-flex;
+            align-items: center; gap: 8px; text-decoration: none;
+            font-family: 'Inter', sans-serif;
+        }
+        .modal-btn-map { background: var(--green); color: #fff; }
+        .modal-btn-map:hover { background: var(--green-light); }
+        .modal-btn-wa { background: #25D366; color: #fff; }
+        .modal-btn-wa:hover { background: #20BD5A; }
+        .modal-btn-phone { background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color); }
+        .modal-btn-phone:hover { background: var(--gray-light); }
+
+        /* BOOKING */
+        .booking { padding: 90px 0; background: var(--bg-booking); color: #fff; position: relative; overflow: hidden; }
+        .booking::before {
+            content: ''; position: absolute; top: -60px; right: -60px;
+            width: 300px; height: 300px; border-radius: 50%;
+            border: 60px solid rgba(255,255,255,0.03);
+        }
+        .booking .section-badge { background: rgba(255,255,255,0.15); }
+        .booking .section-title { color: #fff; }
+        .booking .section-subtitle { color: var(--text-muted); }
+
+        .booking-container {
+            max-width: 700px; margin: 0 auto;
+            background: rgba(255,255,255,0.08); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: var(--radius); padding: 40px;
+        }
+        .booking-form { display: flex; flex-direction: column; gap: 20px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group label {
+            font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.8);
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 12px 16px; border-radius: var(--radius-sm);
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.1); color: #fff;
+            font-size: 0.92rem; font-family: 'Inter', sans-serif;
+            transition: var(--transition); outline: none;
+        }
+        .form-group input::placeholder,
+        .form-group textarea::placeholder { color: rgba(255,255,255,0.4); }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: rgba(255,255,255,0.5);
+            background: rgba(255,255,255,0.15);
+        }
+        .form-group select { cursor: pointer; }
+        .form-group select option { background: var(--green-dark); color: #fff; }
+        .form-group textarea { resize: vertical; min-height: 80px; }
+
+        .btn-submit {
+            background: #25D366; color: #fff;
+            padding: 16px 32px; border-radius: 28px;
+            font-weight: 700; font-size: 1rem; border: none;
+            cursor: pointer; transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .btn-submit:hover { background: #20BD5A; transform: translateY(-2px); box-shadow: 0 8px 25px rgba(37,211,102,0.3); }
+
+        .booking-note {
+            text-align: center; margin-top: 16px;
+            font-size: 0.82rem; color: rgba(255,255,255,0.5);
+        }
+
+        .booking-success { display: none; text-align: center; padding: 40px; }
+        .booking-success.show { display: block; }
+        .booking-success .check-icon {
+            width: 80px; height: 80px; background: rgba(37,211,102,0.2);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 20px; font-size: 2.5rem;
+        }
+        .booking-success h3 { font-size: 1.5rem; margin-bottom: 10px; }
+        .booking-success p { color: rgba(255,255,255,0.7); }
+
+        /* FOOTER */
+        footer { background: var(--bg-footer); color: #fff; padding: 70px 0 30px; }
+        .footer-grid {
+            display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 50px;
+        }
+        .footer-brand h2 { font-size: 1.6rem; margin-bottom: 14px; color: #fff; }
+        .footer-brand h2 span { color: var(--brown-light); }
+        .footer-brand p { color: rgba(255,255,255,0.5); font-size: 0.92rem; margin-bottom: 18px; max-width: 320px; }
+        .footer-social { display: flex; gap: 10px; }
+        .footer-social a {
+            width: 40px; height: 40px; background: rgba(255,255,255,0.08);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            transition: var(--transition); font-size: 1.1rem;
+        }
+        .footer-social a:hover { background: var(--green); transform: translateY(-3px); }
+
+        .footer-col h4 { font-size: 0.9rem; margin-bottom: 18px; font-family: 'Inter', sans-serif; font-weight: 700; }
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 8px; }
+        .footer-col a {
+            color: rgba(255,255,255,0.5); font-size: 0.88rem;
+            transition: var(--transition); display: flex; align-items: center; gap: 6px;
+        }
+        .footer-col a:hover { color: #fff; padding-left: 4px; }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 24px; display: flex; justify-content: space-between;
+            align-items: center; flex-wrap: wrap; gap: 12px;
+        }
+        .footer-bottom p { color: rgba(255,255,255,0.35); font-size: 0.82rem; }
+
+        /* FLOATING WHATSAPP */
+        .wa-float {
+            position: fixed; bottom: 28px; right: 28px; z-index: 900;
+            width: 60px; height: 60px; background: #25D366;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 6px 20px rgba(37,211,102,0.4);
+            cursor: pointer; transition: var(--transition);
+            animation: waBounce 3s ease-in-out infinite;
+        }
+        .wa-float:hover { transform: scale(1.1); box-shadow: 0 8px 28px rgba(37,211,102,0.5); }
+        .wa-float svg { width: 32px; height: 32px; fill: #fff; }
+
+        .wa-float .wa-tooltip {
+            position: absolute; right: 72px; top: 50%; transform: translateY(-50%);
+            background: #fff; color: #1A1A1A; padding: 10px 16px;
+            border-radius: 10px; font-size: 0.82rem; font-weight: 600;
+            white-space: nowrap; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
+        .wa-float:hover .wa-tooltip { opacity: 1; }
+        .wa-float .wa-tooltip::after {
+            content: ''; position: absolute; right: -6px; top: 50%; transform: translateY(-50%);
+            border: 6px solid transparent; border-left-color: #fff;
+        }
+
+        @keyframes waBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .wa-float:hover { animation: none; }
+
+        /* SCROLL ANIMATIONS */
+        .anim-fade-up {
+            opacity: 0; transform: translateY(40px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .anim-fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        .anim-fade-left {
+            opacity: 0; transform: translateX(-40px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .anim-fade-left.visible { opacity: 1; transform: translateX(0); }
+
+        .anim-fade-right {
+            opacity: 0; transform: translateX(40px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .anim-fade-right.visible { opacity: 1; transform: translateX(0); }
+
+        .anim-zoom-in {
+            opacity: 0; transform: scale(0.9);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .anim-zoom-in.visible { opacity: 1; transform: scale(1); }
+
+        .anim-flip-up {
+            opacity: 0; transform: perspective(600px) rotateX(15deg) translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .anim-flip-up.visible { opacity: 1; transform: perspective(600px) rotateX(0) translateY(0); }
+
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+        .delay-5 { transition-delay: 0.5s; }
+        .delay-6 { transition-delay: 0.6s; }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .hero-grid, .about-grid { grid-template-columns: 1fr; gap: 40px; }
+            .hero-content { text-align: center; }
+            .hero-content p { margin-left: auto; margin-right: auto; }
+            .hero-buttons { justify-content: center; }
+            .hero-images { max-width: 560px; margin: 0 auto; }
+            .about-img { order: -1; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .modal-info-grid { grid-template-columns: 1fr; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 200px; }
+            .reviews-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed; top: 0; right: -100%; width: 280px; height: 100vh;
+                background: var(--bg-primary); flex-direction: column; justify-content: center;
+                gap: 20px; transition: right 0.35s ease;
+                box-shadow: -4px 0 20px rgba(0,0,0,0.1); z-index: 999; padding: 20px;
+            }
+            .nav-links.open { right: 0; }
+            .hamburger { display: flex; z-index: 1001; }
+
+            .hero { min-height: auto; padding: 90px 0 50px; }
+            .hero-floating-img { width: 150px; height: 110px; bottom: -15px; left: -15px; }
+            .hero-main-img img { height: 300px; }
+
+            .stats-row { flex-wrap: wrap; }
+            .stat-card { min-width: 120px; }
+            .branches-grid { grid-template-columns: 1fr; }
+            .menu-grid { grid-template-columns: 1fr; }
+            .gallery-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 180px; }
+            .gallery-item.wide, .gallery-item.tall { grid-column: span 1; grid-row: span 1; }
+            .reviews-grid { grid-template-columns: 1fr; }
+            .reviews-summary { flex-direction: column; gap: 24px; }
+            .form-row { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+            .modal-img { height: 180px; }
+            .modal-body { padding: 22px; }
+            .modal-actions { flex-direction: column; }
+            .modal-btn { width: 100%; justify-content: center; }
+            .booking-container { padding: 28px 20px; }
+
+            .wa-float { width: 52px; height: 52px; bottom: 20px; right: 20px; }
+            .wa-float svg { width: 28px; height: 28px; }
+            .wa-float .wa-tooltip { display: none; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 { font-size: 1.9rem; }
+            .hero-buttons { flex-direction: column; align-items: center; }
+            .btn { width: 100%; justify-content: center; }
+            .gallery-grid { grid-template-columns: 1fr; grid-auto-rows: 200px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header id="header">
+        <nav>
+            <a href="#hero" class="logo">Tana<span>tap</span></a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#about" onclick="closeNav()">Tentang</a></li>
+                <li><a href="#concept" onclick="closeNav()">Konsep</a></li>
+                <li><a href="#menu" onclick="closeNav()">Menu</a></li>
+                <li><a href="#gallery" onclick="closeNav()">Galeri</a></li>
+                <li><a href="#reviews" onclick="closeNav()">Ulasan</a></li>
+                <li><a href="#branches" onclick="closeNav()">Cabang</a></li>
+                <li><a href="#booking" class="nav-booking" onclick="closeNav()"> Booking</a></li>
+                <li><button class="theme-toggle" id="themeToggle" aria-label="Toggle tema" onclick="toggleTheme()"></button></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Menu" onclick="toggleNav()">
+                <span></span><span></span><span></span>
+            </button>
+        </nav>
+    </header>
+    <div class="mobile-overlay" id="mobileOverlay" onclick="closeNav()"></div>
+
+    <!-- HERO -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="section-badge anim-fade-up">🌿 Urban Hidden Garden</div>
+                    <h1 class="anim-fade-up delay-1">Where Great Coffee Meets <em>Nature</em></h1>
+                    <p class="anim-fade-up delay-2">Tanatap Coffee — jaringan kedai kopi artisan Indonesia sejak 2021. Filosofi "Tanah Nata Atap" dari RAD+ar, menciptakan ruang pertemuan nyaman di tengah lingkungan tropis.</p>
+                    <div class="hero-buttons anim-fade-up delay-3">
+                        <a href="#menu" class="btn btn-primary">☕ Lihat Menu</a>
+                        <a href="#booking" class="btn btn-outline"> Booking Sekarang</a>
+                    </div>
+                </div>
+                <div class="hero-images anim-zoom-in delay-2">
+                    <div class="hero-main-img">
+                        <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&h=600&fit=crop" alt="Tanatap Coffee" loading="eager">
+                    </div>
+                    <div class="hero-floating-img">
+                        <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=400&h=300&fit=crop" alt="Tanatap Garden" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content">
+                    <div class="section-badge anim-fade-up">Profil</div>
+                    <h2 class="anim-fade-up delay-1">Tanatap: Tanah Nata Atap</h2>
+                    <p class="anim-fade-up delay-2">Tanatap berasal dari <strong>"Tanah Nata Atap"</strong>, filosofi arsitektur oleh <strong>RAD+ar</strong> — menggambarkan harmoni antara tanah, tata ruang, dan atap untuk menciptakan third space yang nyaman di tengah kota tropis.</p>
+                    <p class="anim-fade-up delay-2">Berdiri tahun 2021 di Meruya, Jakarta Barat, Tanatap mengusung misi menghadirkan kopi berkualitas tinggi, arsitektur berkelanjutan, dan ruang kreatif untuk komunitas.</p>
+                    <div class="about-quote anim-flip-up delay-3">
+                        <p>"We call TANATAP a 'coffee garden' instead of a coffee shop."</p>
+                        <cite>— Tika Dwi Putri, Co-Founder</cite>
+                    </div>
+                    <div class="stats-row">
+                        <div class="stat-card anim-zoom-in delay-3"><h3>6+</h3><p>Cabang</p></div>
+                        <div class="stat-card anim-zoom-in delay-4"><h3>2021</h3><p>Berdiri</p></div>
+                        <div class="stat-card anim-zoom-in delay-5"><h3>100%</h3><p>Kopi Lokal</p></div>
+                    </div>
+                </div>
+                <div class="about-img anim-fade-right delay-2">
+                    <img src="https://images.unsplash.com/photo-1559925393-8be0ec4767c8?w=700&h=500&fit=crop" alt="Tanatap Coffee Garden" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONCEPT -->
+    <section class="concept" id="concept">
+        <div class="container">
+            <div class="section-badge">Arsitektur</div>
+            <h2 class="section-title">Konsep & Keunikan</h2>
+            <p class="section-subtitle">Micro-Tropical Architecture oleh RAD+ar — award-winning, berkelanjutan, dan Instagrammable</p>
+            <div class="concept-grid">
+                <div class="concept-card anim-fade-up"><div class="concept-icon">🌿</div><h3>Taman Vertikal & Rooftop</h3><p>Dinding hijau dan taman rooftop yang dapat dilalui, suasana garden asri di perkotaan.</p></div>
+                <div class="concept-card anim-fade-up delay-1"><div class="concept-icon"></div><h3>Glass Block Envelope</h3><p>Fasad glass block membiarkan cahaya alami masuk sambil menjaga estetika arsitektural.</p></div>
+                <div class="concept-card anim-fade-up delay-2"><div class="concept-icon">💧</div><h3>Penampungan Air Hujan</h3><p>Sistem daur ulang air hujan mendukung konsep keberlanjutan dan sirkulasi alami.</p></div>
+                <div class="concept-card anim-fade-up delay-3"><div class="concept-icon">🪑</div><h3>Amphitheater Seating</h3><p>Area duduk bertingkat ala amphitheater yang nyaman untuk ngobrol atau bekerja.</p></div>
+                <div class="concept-card anim-fade-up delay-4"><div class="concept-icon">🏆</div><h3>Award-Winning</h3><p>Penghargaan internasional untuk desain tropical modern yang inovatif dan berkelanjutan.</p></div>
+                <div class="concept-card anim-fade-up delay-5"><div class="concept-icon">🎤</div><h3>TANATALKS</h3><p>Event series dan komunitas kreatif sebagai wadah diskusi dan kolaborasi.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MENU -->
+    <section class="menu" id="menu">
+        <div class="container">
+            <div class="section-badge">Menu</div>
+            <h2 class="section-title">Menu Andalan</h2>
+            <p class="section-subtitle">Pilihan kopi, non-coffee, dan hidangan berkualitas tinggi</p>
+
+            <div class="menu-tabs">
+                <button class="menu-tab active" data-tab="coffee">☕ Kopi</button>
+                <button class="menu-tab" data-tab="noncoffee">🍹 Non-Coffee</button>
+                <button class="menu-tab" data-tab="food">🍽️ Makanan</button>
+            </div>
+
+            <div class="menu-category active" id="tab-coffee">
+                <div class="menu-grid">
+                    <div class="menu-card anim-flip-up"><div class="menu-card-img"><img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=500&h=400&fit=crop" alt="Kopi Susu Gula Aren" loading="lazy"></div><div class="menu-card-body"><h3>Kopi Susu Gula Aren</h3><div class="price">Rp 48.000</div><div class="desc">Espresso, susu segar, dan gula aren asli Indonesia</div></div></div>
+                    <div class="menu-card anim-flip-up delay-1"><div class="menu-card-img"><img src="https://images.unsplash.com/photo-1534778101976-62847782c213?w=500&h=400&fit=crop" alt="Vanilka" loading="lazy"></div><div class="menu-card-body"><h3>Vanilka</h3><div class="price">Rp 53.000</div><div class="desc">Vanilla latte premium dengan sentuhan butterscotch creamy</div></div></div>
+                    <div class="menu-card anim-flip-up delay-2"><div class="menu-card-img"><img src="https://images.unsplash.com/photo-1515823064-d6e0c04616a7?w=500&h=400&fit=crop" alt="Pandan Latte" loading="lazy"></div><div class="menu-card-body"><h3>Pandan Latte</h3><div class="price">Rp 39.000</div><div class="desc">Latte pandan khas Indonesia dengan aroma menenangkan</div></div></div>
+                    <div class="menu-card anim-flip-up delay-3"><div class="menu-card-img"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=500&h=400&fit=crop" alt="Manual Brew" loading="lazy"></div><div class="menu-card-body"><h3>Manual Brew</h3><div class="price">Rp 35.000</div><div class="desc">Seduhan V60 manual untuk karakter biji kopi terbaik</div></div></div>
+                    <div class="menu-card anim-flip-up delay-4"><div class="menu-card-img"><img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=500&h=400&fit=crop" alt="Coldbrew Pineapple" loading="lazy"></div><div class="menu-card-body"><h3>Coldbrew Pineapple</h3><div class="price">Rp 50.000</div><div class="desc">Cold brew kopi dengan infusi nanas yang segar</div></div></div>
+                </div>
+            </div>
+
+            <div class="menu-category" id="tab-noncoffee">
+                <div class="menu-grid">
+                    <div class="menu-card anim-fade-up"><div class="menu-card-img"><img src="https://images.unsplash.com/photo-1536935338788-846bb9981813?w=500&h=400&fit=crop" alt="Bazooka" loading="lazy"></div><div class="menu-card-body"><h3>Bazooka</h3><div class="price">-</div><div class="desc">Mocktail pink bubblegum yang fun dan playful</div></div></div>
+                    <div class="menu-card anim-fade-up delay-1"><div class="menu-card-img"><img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed514?w=500&h=400&fit=crop" alt="Black Lemonade" loading="lazy"></div><div class="menu-card-body"><h3>Black Lemonade</h3><div class="price">-</div><div class="desc">Lemonade gelap elegan dengan black lemon dan mint</div></div></div>
+                    <div class="menu-card anim-fade-up delay-2"><div class="menu-card-img"><img src="https://images.unsplash.com/photo-1515823064-d6e0c04616a7?w=500&h=400&fit=crop&sat=-50" alt="Matcha Bottle" loading="lazy"></div><div class="menu-card-body"><h3>Matcha Bottle</h3><div class="price">-</div><div class="desc">Premium matcha green tea dalam botol, layered dengan susu</div></div></div>
+                </div>
+            </div>
+
+            <div class="menu-category" id="tab-food">
+                <div class="menu-grid">
+                    <div class="menu-card anim-zoom-in"><div class="menu-card-img"><img src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=500&h=400&fit=crop" alt="Nasi Goreng Rendang" loading="lazy"></div><div class="menu-card-body"><h3>Nasi Goreng Rendang</h3><div class="price">-</div><div class="desc">Nasi goreng khas dengan potongan rendang kaya rempah</div></div></div>
+                    <div class="menu-card anim-zoom-in delay-1"><div class="menu-card-img"><img src="https://images.unsplash.com/photo-1562967916-eb82221dfb44?w=500&h=400&fit=crop" alt="Beef Black Pepper Rice" loading="lazy"></div><div class="menu-card-body"><h3>Beef Black Pepper Rice</h3><div class="price">-</div><div class="desc">Nasi dengan beef tender dan saus lada hitam gourmet</div></div></div>
+                    <div class="menu-card anim-zoom-in delay-2"><div class="menu-card-img"><img src="https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=500&h=400&fit=crop" alt="Pisang Goreng" loading="lazy"></div><div class="menu-card-body"><h3>Pisang Goreng</h3><div class="price">-</div><div class="desc">Pisang goreng renyah emas dengan taburan gula halus</div></div></div>
+                    <div class="menu-card anim-zoom-in delay-3"><div class="menu-card-img"><img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&h=400&fit=crop" alt="Almond Croissant" loading="lazy"></div><div class="menu-card-body"><h3>Almond Croissant</h3><div class="price">-</div><div class="desc">Croissant berlapis renyah dengan irisan almond</div></div></div>
+                    <div class="menu-card anim-zoom-in delay-4"><div class="menu-card-img"><img src="https://images.unsplash.com/photo-1470124182917-cc6e71b22ecc?w=500&h=400&fit=crop" alt="Creme Brulee" loading="lazy"></div><div class="menu-card-body"><h3>Creme Brulee</h3><div class="price">-</div><div class="desc">Dessert klasik Perancis dengan karamel sempurna</div></div></div>
+                </div>
+            </div>
+
+            <div class="menu-note anim-fade-up">
+                <strong>☕ Catatan:</strong> Biji kopi dari <strong>Fugol</strong>, di-roasting in-house untuk kualitas terbaik di setiap cangkir.
+            </div>
+        </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="gallery" id="gallery">
+        <div class="container">
+            <div class="section-badge"> Galeri</div>
+            <h2 class="section-title">Galeri Cafe</h2>
+            <p class="section-subtitle">Intip suasana Tanatap Coffee — Urban Hidden Garden yang instagrammable</p>
+
+            <div class="gallery-grid">
+                <div class="gallery-item wide anim-zoom-in" onclick="openLightbox(0)"><img src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=800&h=500&fit=crop" alt="Interior" loading="lazy"><div class="gallery-caption">Interior Tanatap Coffee</div></div>
+                <div class="gallery-item tall anim-fade-up delay-1" onclick="openLightbox(1)"><img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=500&h=700&fit=crop" alt="Taman" loading="lazy"><div class="gallery-caption">Taman Vertikal & Rooftop</div></div>
+                <div class="gallery-item anim-fade-right delay-2" onclick="openLightbox(2)"><img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=500&h=400&fit=crop" alt="Entrance" loading="lazy"><div class="gallery-caption">Entrance Garden</div></div>
+                <div class="gallery-item anim-fade-up delay-3" onclick="openLightbox(3)"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=500&h=400&fit=crop" alt="Barista" loading="lazy"><div class="gallery-caption">Barista Crafting</div></div>
+                <div class="gallery-item anim-fade-left delay-2" onclick="openLightbox(4)"><img src="https://images.unsplash.com/photo-1559925393-8be0ec4767c8?w=500&h=400&fit=crop" alt="Seating" loading="lazy"><div class="gallery-caption">Seating Area</div></div>
+                <div class="gallery-item wide anim-zoom-in delay-3" onclick="openLightbox(5)"><img src="https://images.unsplash.com/photo-1493857671505-72967e2e2760?w=800&h=500&fit=crop" alt="Outdoor" loading="lazy"><div class="gallery-caption">Outdoor Garden Area</div></div>
+                <div class="gallery-item anim-flip-up delay-4" onclick="openLightbox(6)"><img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=500&h=400&fit=crop" alt="Latte" loading="lazy"><div class="gallery-caption">Latte Art</div></div>
+                <div class="gallery-item anim-fade-up delay-5" onclick="openLightbox(7)"><img src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=500&h=400&fit=crop" alt="Beans" loading="lazy"><div class="gallery-caption">Premium Coffee Beans</div></div>
+                <div class="gallery-item anim-zoom-in delay-5" onclick="openLightbox(8)"><img src="https://images.unsplash.com/photo-1559305616-3f99cd43e353?w=500&h=400&fit=crop" alt="Corner" loading="lazy"><div class="gallery-caption">Cozy Corner</div></div>
+                <div class="gallery-item anim-fade-right delay-6" onclick="openLightbox(9)"><img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=500&h=400&fit=crop" alt="Night" loading="lazy"><div class="gallery-caption">Night Ambiance</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" onclick="closeLightbox()" aria-label="Tutup">✕</button>
+        <button class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1)">‹</button>
+        <img id="lightboxImg" src="" alt="">
+        <button class="lightbox-nav lightbox-next" onclick="navigateLightbox(1)">›</button>
+        <div class="lightbox-counter" id="lightboxCounter"></div>
+    </div>
+
+    <!-- REVIEWS -->
+    <section class="reviews" id="reviews">
+        <div class="container">
+            <div class="section-badge">⭐ Ulasan</div>
+            <h2 class="section-title">Apa Kata Pelanggan Kami</h2>
+            <p class="section-subtitle">Ulasan jujur dari pelanggan yang telah merasakan pengalaman di Tanatap Coffee</p>
+
+            <!-- Summary -->
+            <div class="reviews-summary anim-fade-up">
+                <div class="reviews-avg">
+                    <div class="big-number">4.8</div>
+                    <div class="stars-big">★★★★★</div>
+                    <div class="total-reviews">1.247 ulasan</div>
+                </div>
+                <div class="reviews-bars">
+                    <div class="review-bar-row">
+                        <span class="review-bar-label">5 ★</span>
+                        <div class="review-bar-track"><div class="review-bar-fill" style="width: 78%"></div></div>
+                        <span class="review-bar-count">972</span>
+                    </div>
+                    <div class="review-bar-row">
+                        <span class="review-bar-label">4 ★</span>
+                        <div class="review-bar-track"><div class="review-bar-fill" style="width: 15%"></div></div>
+                        <span class="review-bar-count">187</span>
+                    </div>
+                    <div class="review-bar-row">
+                        <span class="review-bar-label">3 ★</span>
+                        <div class="review-bar-track"><div class="review-bar-fill" style="width: 4%"></div></div>
+                        <span class="review-bar-count">50</span>
+                    </div>
+                    <div class="review-bar-row">
+                        <span class="review-bar-label">2 ★</span>
+                        <div class="review-bar-track"><div class="review-bar-fill" style="width: 2%"></div></div>
+                        <span class="review-bar-count">25</span>
+                    </div>
+                    <div class="review-bar-row">
+                        <span class="review-bar-label">1 ★</span>
+                        <div class="review-bar-track"><div class="review-bar-fill" style="width: 1%"></div></div>
+                        <span class="review-bar-count">13</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review Cards -->
+            <div class="reviews-grid" id="reviewsGrid">
+                <!-- Reviews will be injected by JS -->
+            </div>
+
+            <div class="load-more-wrap">
+                <button class="btn btn-outline" id="loadMoreBtn" onclick="loadMoreReviews()">Lihat Lebih Banyak Ulasan ↓</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- BRANCHES -->
+    <section class="branches" id="branches">
+        <div class="container">
+            <div class="section-badge">📍 Lokasi</div>
+            <h2 class="section-title">Temukan Kami</h2>
+            <p class="section-subtitle">Enam cabang Tanatap Coffee siap menemani hari-harimu</p>
+
+            <div class="branches-grid">
+                <div class="branch-card anim-fade-up" onclick="openModal('meruya')">
+                    <div class="branch-img"><img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=600&h=400&fit=crop" alt="Tanatap Meruya" loading="lazy"></div>
+                    <div class="branch-body"><h3>Tanatap Meruya</h3><div class="b-address">Jl. Jalur 20 No.19, Meruya Utara, Kembangan, Jakarta Barat</div><div class="b-hours">🕐 08.00 – 22.00</div><div class="b-wa">📱 +62 821-1188-5102</div><div class="view-detail">Lihat Detail <span>→</span></div></div>
+                </div>
+
+                <div class="branch-card closing anim-fade-up delay-1" onclick="openModal('ampera')">
+                    <span class="closing-badge">⚠️ Tutup 31 Mei 2026</span>
+                    <div class="branch-img"><img src="https://images.unsplash.com/photo-1559305616-3f99cd43e353?w=600&h=400&fit=crop" alt="Tanatap Ampera" loading="lazy"></div>
+                    <div class="branch-body"><h3>Tanatap Ampera</h3><div class="b-address">Jl. Ampera Raya No.129A, Ragunan, Pasar Minggu, Jakarta Selatan</div><div class="b-hours">🕐 08.00 – 22.00</div><div class="b-wa">📱 +62 812-8899-5102</div><div class="view-detail">Lihat Detail <span>→</span></div></div>
+                </div>
+
+                <div class="branch-card anim-fade-up delay-2" onclick="openModal('matraman')">
+                    <div class="branch-img"><img src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=600&h=400&fit=crop" alt="Tanatap Matraman" loading="lazy"></div>
+                    <div class="branch-body"><h3>Tanatap Matraman</h3><div class="b-address">Jl. Taman Matraman Timur No.11-11A, Pegangsaan, Menteng, Jakarta Pusat</div><div class="b-hours">🕐 07.00 – 22.00</div><div class="b-wa"> +62 813-9900-5102</div><div class="view-detail">Lihat Detail <span>→</span></div></div>
+                </div>
+
+                <div class="branch-card anim-fade-up delay-3" onclick="openModal('bekasi')">
+                    <div class="branch-img"><img src="https://images.unsplash.com/photo-1493857671505-72967e2e2760?w=600&h=400&fit=crop" alt="Tanatap Bekasi" loading="lazy"></div>
+                    <div class="branch-body"><h3>Tanatap Bekasi</h3><div class="b-address">Kemang Pratama, Bekasi Selatan, Jawa Barat</div><div class="b-hours">🕐 08.00 – 22.00</div><div class="b-wa"> +62 812-7788-5102</div><div class="view-detail">Lihat Detail <span>→</span></div></div>
+                </div>
+
+                <div class="branch-card anim-fade-up delay-4" onclick="openModal('semarang')">
+                    <div class="branch-img"><img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=600&h=400&fit=crop" alt="Tanatap Semarang" loading="lazy"></div>
+                    <div class="branch-body"><h3>Tanatap Pavilion Semarang</h3><div class="b-address">Pavilion Semarang, Jawa Tengah</div><div class="b-hours">🕐 08.00 – 22.00</div><div class="b-wa">📱 +62 811-6677-5102</div><div class="view-detail">Lihat Detail <span>→</span></div></div>
+                </div>
+
+                <div class="branch-card anim-fade-up delay-5" onclick="openModal('bandung')">
+                    <div class="branch-img"><img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&h=400&fit=crop" alt="Tanatap Braga" loading="lazy"></div>
+                    <div class="branch-body"><h3>Tanatap Heritage Braga</h3><div class="b-address">Jl. Braga No.99-101, Bandung, Jawa Barat</div><div class="b-hours">🕐 07.00 – 22.00</div><div class="b-wa">📱 +62 812-3344-5102</div><div class="view-detail">Lihat Detail <span>→</span></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BRANCH MODAL -->
+    <div class="modal-overlay" id="branchModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeBranchModal()" aria-label="Tutup">✕</button>
+            <img class="modal-img" id="mImg" src="" alt="">
+            <div class="modal-body">
+                <h2 id="mTitle"></h2>
+                <div class="modal-info-grid">
+                    <div class="modal-info-card"><div class="modal-info-icon mi-address">📍</div><div><h4>Alamat</h4><p id="mAddress"></p></div></div>
+                    <div class="modal-info-card"><div class="modal-info-icon mi-hours"></div><div><h4>Jam Operasional</h4><p id="mHours"></p></div></div>
+                    <div class="modal-info-card"><div class="modal-info-icon mi-wa"></div><div><h4>WhatsApp</h4><p><a id="mWaLink" href="#" target="_blank" rel="noopener">Chat via WhatsApp</a></p></div></div>
+                    <div class="modal-info-card"><div class="modal-info-icon mi-phone">📞</div><div><h4>Telepon</h4><p><a id="mPhoneLink" href="#">Hubungi</a></p></div></div>
+                </div>
+                <iframe class="modal-map" id="mMap" src="" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <div class="modal-actions">
+                    <a class="modal-btn modal-btn-map" id="mMapsBtn" href="#" target="_blank" rel="noopener noreferrer">🗺️ Buka di Google Maps</a>
+                    <a class="modal-btn modal-btn-wa" id="mWaBtn" href="#" target="_blank" rel="noopener noreferrer"> Booking via WA</a>
+                    <a class="modal-btn modal-btn-phone" id="mPhoneBtn" href="#">📞 Telepon</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOOKING -->
+    <section class="booking" id="booking">
+        <div class="container">
+            <div class="section-badge">📲 Reservasi</div>
+            <h2 class="section-title">Booking Tempat</h2>
+            <p class="section-subtitle">Isi formulir di bawah untuk reservasi tempat di cabang Tanatap Coffee pilihanmu</p>
+
+            <div class="booking-container">
+                <form class="booking-form" id="bookingForm" onsubmit="handleBooking(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bookName">Nama Lengkap *</label>
+                            <input type="text" id="bookName" placeholder="Masukkan nama Anda" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookPhone">No. WhatsApp *</label>
+                            <input type="tel" id="bookPhone" placeholder="08xxxxxxxxxx" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bookBranch">Pilih Cabang *</label>
+                            <select id="bookBranch" required>
+                                <option value="">— Pilih Cabang —</option>
+                                <option value="Meruya">Tanatap Meruya</option>
+                                <option value="Ampera">Tanatap Ampera</option>
+                                <option value="Matraman">Tanatap Matraman</option>
+                                <option value="Bekasi">Tanatap Bekasi</option>
+                                <option value="Semarang">Tanatap Pavilion Semarang</option>
+                                <option value="Bandung">Tanatap Heritage Braga</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookGuests">Jumlah Tamu *</label>
+                            <select id="bookGuests" required>
+                                <option value="">— Jumlah —</option>
+                                <option value="1-2 orang">1-2 Orang</option>
+                                <option value="3-5 orang">3-5 Orang</option>
+                                <option value="6-10 orang">6-10 Orang</option>
+                                <option value="10+ orang">10+ Orang (Private)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bookDate">Tanggal *</label>
+                            <input type="date" id="bookDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookTime">Waktu *</label>
+                            <select id="bookTime" required>
+                                <option value="">— Pilih Waktu —</option>
+                                <option value="07:00">07:00</option>
+                                <option value="08:00">08:00</option>
+                                <option value="09:00">09:00</option>
+                                <option value="10:00">10:00</option>
+                                <option value="11:00">11:00</option>
+                                <option value="12:00">12:00</option>
+                                <option value="13:00">13:00</option>
+                                <option value="14:00">14:00</option>
+                                <option value="15:00">15:00</option>
+                                <option value="16:00">16:00</option>
+                                <option value="17:00">17:00</option>
+                                <option value="18:00">18:00</option>
+                                <option value="19:00">19:00</option>
+                                <option value="20:00">20:00</option>
+                                <option value="21:00">21:00</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookNote">Catatan (opsional)</label>
+                        <textarea id="bookNote" placeholder="Contoh: meja dekat taman, acara ulang tahun, dll."></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">💬 Kirim via WhatsApp</button>
+                    <p class="booking-note">Formulir akan dikirim langsung via WhatsApp ke cabang yang Anda pilih.</p>
+                </form>
+
+                <div class="booking-success" id="bookingSuccess">
+                    <div class="check-icon">✅</div>
+                    <h3>Reservasi Terkirim!</h3>
+                    <p>Terima kasih! Anda akan diarahkan ke WhatsApp untuk konfirmasi booking.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h2>Tana<span>tap</span> Coffee</h2>
+                    <p>Jaringan kedai kopi artisan Indonesia. Filosofi "Urban Hidden Garden meets Great Caffeine" sejak 2021.</p>
+                    <div class="footer-social">
+                        <a href="https://instagram.com/tanatapcoffee" target="_blank" rel="noopener" aria-label="Instagram">📷</a>
+                        <a href="https://tiktok.com/@tanatapcoffee" target="_blank" rel="noopener" aria-label="TikTok">🎵</a>
+                        <a href="https://linkedin.com/company/tanatap-artisan" target="_blank" rel="noopener" aria-label="LinkedIn">💼</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Navigasi</h4>
+                    <ul>
+                        <li><a href="#about">Tentang Kami</a></li>
+                        <li><a href="#concept">Konsep</a></li>
+                        <li><a href="#menu">Menu</a></li>
+                        <li><a href="#gallery">Galeri</a></li>
+                        <li><a href="#reviews">Ulasan</a></li>
+                        <li><a href="#branches">Cabang</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Kontak</h4>
+                    <ul>
+                        <li><a href="https://tanatapcoffee.isellershop.com" target="_blank" rel="noopener">🌐 Website</a></li>
+                        <li><a href="tel:+6282111885102">📞 +62-821-1188-5102</a></li>
+                        <li><a href="#booking">📲 Booking</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Media Sosial</h4>
+                    <ul>
+                        <li><a href="https://instagram.com/tanatapcoffee" target="_blank" rel="noopener">@tanatapcoffee</a></li>
+                        <li><a href="https://tiktok.com/@tanatapcoffee" target="_blank" rel="noopener">@tanatapcoffee</a></li>
+                        <li><a href="https://linkedin.com/company/tanatap-artisan" target="_blank" rel="noopener">Tanatap Artisan</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Tanatap Coffee. All rights reserved.</p>
+                <p>Crafted with ☕ & 🌿</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- FLOATING WHATSAPP -->
+    <a href="https://wa.me/6282111885102?text=Halo%20Tanatap%20Coffee%2C%20saya%20ingin%20bertanya%20tentang%20reservasi." target="_blank" rel="noopener" class="wa-float" aria-label="Chat WhatsApp">
+        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16.004 0h-.008C7.174 0 0 7.176 0 16c0 3.5 1.128 6.744 3.046 9.378L1.054 31.29l6.118-1.958A15.9 15.9 0 0016.004 32C24.826 32 32 24.822 32 16S24.826 0 16.004 0zm9.312 22.608c-.39 1.1-1.932 2.014-3.168 2.28-.846.18-1.95.324-5.67-1.218-4.764-1.974-7.83-6.786-8.064-7.098-.228-.312-1.914-2.544-1.914-4.854 0-2.31 1.212-3.45 1.644-3.918.39-.426 1.014-.618 1.614-.618.192 0 .366.012.522.018.432.018.648.042.936.714.36.84 1.236 3.012 1.344 3.228.108.216.216.504.078.792-.132.294-.246.426-.462.672-.216.246-.444.522-.636.702-.216.204-.444.426-.204.846.24.42 1.062 1.77 2.28 2.856 1.572 1.398 2.898 1.83 3.312 2.028.312.15.684.12.924-.132.3-.318.672-.84 1.05-1.356.27-.372.612-.414.948-.282.342.126 2.154 1.014 2.526 1.194.372.18.618.276.714.438.09.162.09.942-.3 2.04z"/>
+        </svg>
+        <span class="wa-tooltip">Chat dengan kami!</span>
+    </a>
+
+    <script>
+        // ==================== REVIEWS DATA ====================
+        const allReviews = [
+            {
+                name: "Sarah Amelia",
+                avatar: "SA",
+                avatarColor: "#2D5A3D",
+                rating: 5,
+                date: "15 Mei 2026",
+                branch: "Meruya",
+                text: "Tempatnya super aesthetic banget! Konsep garden-nya berasa banget, adem dan nyaman. Kopi Susu Gula Aren-nya juara, gula aren-nya berasa dan kopinya smooth. Perfect buat kerja sambil ngopi seharian.",
+                liked: false,
+                likeCount: 47,
+                verified: true
+            },
+            {
+                name: "Budi Santoso",
+                avatar: "BS",
+                avatarColor: "#8B5A2B",
+                rating: 5,
+                date: "12 Mei 2026",
+                branch: "Matraman",
+                text: "Paling suka sama konsep Tanatap! Bangunan-nya unik banget, apalagi rooftop garden-nya. Vanilka-nya enak, creamy dan butterscotch-nya pas. Harga reasonable untuk kualitas segini.",
+                liked: false,
+                likeCount: 32,
+                verified: true
+            },
+            {
+                name: "Dina Rahma",
+                avatar: "DR",
+                avatarColor: "#E74C3C",
+                rating: 5,
+                date: "8 Mei 2026",
+                branch: "Heritage Braga",
+                text: "Kunjungan ke Tanatap Braga dan nggak kecewa! Bangunan heritage-nya keren, perpaduan colonial dan modern tropical. Coldbrew Pineapple-nya refreshing banget, cocok buat cuaca Bandung yang lagi panas.",
+                liked: false,
+                likeCount: 28,
+                verified: true
+            },
+            {
+                name: "Reza Pratama",
+                avatar: "RP",
+                avatarColor: "#3498DB",
+                rating: 4,
+                date: "5 Mei 2026",
+                branch: "Bekasi",
+                text: "Tanatap Bekasi jadi favorite weekend spot keluarga. Tempatnya luas, outdoor area-nya bagus buat anak-anak main. Pisang Goreng-nya enak banget, crispy dan manis pas. Cuma weekend agak rame, mending booking dulu.",
+                liked: false,
+                likeCount: 19,
+                verified: true
+            },
+            {
+                name: "Ayu Lestari",
+                avatar: "AL",
+                avatarColor: "#9B59B6",
+                rating: 5,
+                date: "1 Mei 2026",
+                branch: "Pavilion Semarang",
+                text: "Baru ke Tanatap Semarang dan langsung jatuh cinta! Konsep mall location tapi tetep berasa garden-nya. Manual Brew-nya top, barista-nya ramah dan jelasin asal kopinya. Almond Croissant-nya juga fresh dari oven.",
+                liked: false,
+                likeCount: 24,
+                verified: true
+            },
+            {
+                name: "Fajar Hidayat",
+                avatar: "FH",
+                avatarColor: "#2D5A3D",
+                rating: 5,
+                date: "28 April 2026",
+                branch: "Ampera",
+                text: "Tanatap Ampera memang beda! Suasana-nya cozy, banyak tanaman di mana-mana. Nasi Goreng Rendang-nya porsi gede dan enak, berasa rumahan tapi premium. Sayang banget mau tutup 31 Mei, bakal kangen!",
+                liked: false,
+                likeCount: 56,
+                verified: true
+            },
+            {
+                name: "Maya Putri",
+                avatar: "MP",
+                avatarColor: "#E67E22",
+                rating: 5,
+                date: "25 April 2026",
+                branch: "Meruya",
+                text: "Sering banget ke Tanatap Meruya buat meeting client. Tempatnya professional tapi tetep relaxed. Creme Brulee-nya best! Torch-nya pas, vanilla-nya berasa. Staff-nya juga fast response dan ramah.",
+                liked: false,
+                likeCount: 38,
+                verified: true
+            },
+            {
+                name: "Andi Wijaya",
+                avatar: "AW",
+                avatarColor: "#1ABC9C",
+                rating: 4,
+                date: "20 April 2026",
+                branch: "Matraman",
+                text: "Tanatap Matraman lokasinya strategis di Menteng. Bangunan-nya heritage banget, cocok buat foto-foto. Pandan Latte-nya unik, aroma pandannya natural. WiFi kencang dan colokan banyak, bagus buat WFC.",
+                liked: false,
+                likeCount: 22,
+                verified: true
+            },
+            {
+                name: "Rina Oktaviani",
+                avatar: "RO",
+                avatarColor: "#E74C3C",
+                rating: 5,
+                date: "15 April 2026",
+                branch: "Heritage Braga",
+                text: "Birthday party di Tanatap Braga dan everything was perfect! Staff-nya bantu dekorasi, makanan-nya enak semua, dan suasananya cozy. Beef Black Pepper Rice-nya jadi favorite. Pasti balik lagi!",
+                liked: false,
+                likeCount: 41,
+                verified: true
+            },
+            {
+                name: "Dimas Ardiansyah",
+                avatar: "DA",
+                avatarColor: "#8B5A2B",
+                rating: 5,
+                date: "10 April 2026",
+                branch: "Semarang",
+                text: "Tanatap Pavilion Semarang jadi hidden gem! Di tengah mall tapi suasananya kaya di kebun. Matcha Bottle-nya premium, berasa beda dari matcha biasa. Glass block facade-nya juga aesthetic banget buat foto.",
+                liked: false,
+                likeCount: 17,
+                verified: true
+            },
+            {
+                name: "Lina Marlina",
+                avatar: "LM",
+                avatarColor: "#3498DB",
+                rating: 4,
+                date: "5 April 2026",
+                branch: "Bekasi",
+                text: "First time ke Tanatap Bekasi dan surprised! Tempatnya jauh lebih bagus dari yang dibayangkan. Taman vertikal-nya keren, udara-nya adem. Bazooka drink-nya fun dan Instagrammable. Recommended!",
+                liked: false,
+                likeCount: 15,
+                verified: true
+            },
+            {
+                name: "Hendra Kusuma",
+                avatar: "HK",
+                avatarColor: "#9B59B6",
+                rating: 5,
+                date: "1 April 2026",
+                branch: "Meruya",
+                text: "Sudah 2 tahun jadi pelanggan tetap Tanatap. Konsisten dari awal, kopi-nya selalu enak dan suasana-nya tetep nyaman. Konsep sustainable-nya juga keren, daur ulang air hujan dan sirkulasi alami. Proud customer!",
+                liked: false,
+                likeCount: 63,
+                verified: true
+            }
+        ];
+
+        let displayedReviews = 6;
+        let likedReviews = new Set();
+
+        function renderStars(rating) {
+            return '★'.repeat(rating) + '☆'.repeat(5 - rating);
+        }
+
+        function createReviewCard(review, index) {
+            const isLiked = likedReviews.has(index);
+            return `
+                <div class="review-card anim-fade-up delay-${(index % 6) + 1}">
+                    <div class="review-quote-icon">"</div>
+                    <div class="review-card-header">
+                        <div class="review-avatar" style="background: ${review.avatarColor}">
+                            ${review.avatar}
+                        </div>
+                        <div class="review-author-info">
+                            <div class="review-author-name">${review.name}</div>
+                            <div class="review-author-meta">
+                                <span>${review.date}</span>
+                                ${review.verified ? '<span class="review-badge">✓ Verified</span>' : ''}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-stars">${renderStars(review.rating)}</div>
+                    <div class="review-text">${review.text}</div>
+                    <div class="review-card-footer">
+                        <span class="review-branch-tag">📍 ${review.branch}</span>
+                        <button class="review-like-btn ${isLiked ? 'liked' : ''}" onclick="toggleLike(${index}, this)">
+                            ${isLiked ? '❤️' : '🤍'} <span>${review.likeCount + (isLiked ? 1 : 0)}</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderReviews() {
+            const grid = document.getElementById('reviewsGrid');
+            const reviewsToShow = allReviews.slice(0, displayedReviews);
+            grid.innerHTML = reviewsToShow.map((r, i) => createReviewCard(r, i)).join('');
+
+            // Trigger animations for newly rendered cards
+            setTimeout(() => {
+                grid.querySelectorAll('.anim-fade-up').forEach((el, i) => {
+                    setTimeout(() => el.classList.add('visible'), i * 100);
+                });
+            }, 100);
+
+            // Hide/show load more button
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            if (displayedReviews >= allReviews.length) {
+                loadMoreBtn.style.display = 'none';
+            } else {
+                loadMoreBtn.style.display = 'inline-flex';
+            }
+        }
+
+        function loadMoreReviews() {
+            displayedReviews = Math.min(displayedReviews + 6, allReviews.length);
+            renderReviews();
+        }
+
+        function toggleLike(index, btn) {
+            if (likedReviews.has(index)) {
+                likedReviews.delete(index);
+            } else {
+                likedReviews.add(index);
+            }
+            renderReviews();
+        }
+
+        // ==================== BRANCH DATA ====================
+        const branchData = {
+            meruya: { name: 'Tanatap Meruya', address: 'Jl. Jalur 20 No.19, Meruya Utara, Kembangan, Jakarta Barat', openHour: 8, closeHour: 22, hoursText: '08.00 – 22.00 WIB', wa: '6282111885102', phone: '+62-821-1188-5102', img: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=700&h=400&fit=crop', mapQ: 'Jl.+Jalur+20+No.19,+Meruya+Utara,+Kembangan,+Jakarta+Barat', mapsUrl: 'https://www.google.com/maps/search/?api=1&query=Jl.+Jalur+20+No.19,+Meruya+Utara,+Kembangan,+Jakarta+Barat' },
+            ampera: { name: 'Tanatap Ampera', address: 'Jl. Ampera Raya No.129A, Ragunan, Pasar Minggu, Jakarta Selatan', openHour: 8, closeHour: 22, hoursText: '08.00 – 22.00 WIB', wa: '6281288995102', phone: '+62-812-8899-5102', img: 'https://images.unsplash.com/photo-1559305616-3f99cd43e353?w=700&h=400&fit=crop', mapQ: 'Jl.+Ampera+Raya+No.129A,+Ragunan,+Pasar+Minggu,+Jakarta+Selatan', mapsUrl: 'https://www.google.com/maps/search/?api=1&query=Jl.+Ampera+Raya+No.129A,+Ragunan,+Pasar+Minggu,+Jakarta+Selatan' },
+            matraman: { name: 'Tanatap Matraman', address: 'Jl. Taman Matraman Timur No.11-11A, Pegangsaan, Menteng, Jakarta Pusat', openHour: 7, closeHour: 22, hoursText: '07.00 – 22.00 WIB', wa: '6281399005102', phone: '+62-813-9900-5102', img: 'https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=700&h=400&fit=crop', mapQ: 'Jl.+Taman+Matraman+Timur+No.11,+Pegangsaan,+Menteng,+Jakarta+Pusat', mapsUrl: 'https://www.google.com/maps/search/?api=1&query=Jl.+Taman+Matraman+Timur+No.11,+Pegangsaan,+Menteng,+Jakarta+Pusat' },
+            bekasi: { name: 'Tanatap Bekasi', address: 'Kemang Pratama, Bekasi Selatan, Jawa Barat', openHour: 8, closeHour: 22, hoursText: '08.00 – 22.00 WIB', wa: '6281277885102', phone: '+62-812-7788-5102', img: 'https://images.unsplash.com/photo-1493857671505-72967e2e2760?w=700&h=400&fit=crop', mapQ: 'Kemang+Pratama,+Bekasi+Selatan,+Jawa+Barat', mapsUrl: 'https://www.google.com/maps/search/?api=1&query=Kemang+Pratama,+Bekasi+Selatan,+Jawa+Barat' },
+            semarang: { name: 'Tanatap Pavilion Semarang', address: 'Pavilion Semarang, Jawa Tengah', openHour: 8, closeHour: 22, hoursText: '08.00 – 22.00 WIB', wa: '6281166775102', phone: '+62-811-6677-5102', img: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=700&h=400&fit=crop', mapQ: 'Pavilion+Semarang,+Jawa+Tengah', mapsUrl: 'https://www.google.com/maps/search/?api=1&query=Pavilion+Semarang,+Jawa+Tengah' },
+            bandung: { name: 'Tanatap Heritage Braga', address: 'Jl. Braga No.99-101, Bandung, Jawa Barat', openHour: 7, closeHour: 22, hoursText: '07.00 – 22.00 WIB', wa: '6281233445102', phone: '+62-812-3344-5102', img: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=700&h=400&fit=crop', mapQ: 'Jl.+Braga+No.99-101,+Bandung,+Jawa+Barat', mapsUrl: 'https://www.google.com/maps/search/?api=1&query=Jl.+Braga+No.99-101,+Bandung,+Jawa+Barat' }
+        };
+
+        // ==================== GALLERY DATA ====================
+        const galleryImages = [
+            { src: 'https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=1200&h=800&fit=crop', caption: 'Interior Tanatap Coffee' },
+            { src: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=1200&h=800&fit=crop', caption: 'Taman Vertikal & Rooftop' },
+            { src: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=1200&h=800&fit=crop', caption: 'Entrance Garden' },
+            { src: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1200&h=800&fit=crop', caption: 'Barista Crafting' },
+            { src: 'https://images.unsplash.com/photo-1559925393-8be0ec4767c8?w=1200&h=800&fit=crop', caption: 'Seating Area' },
+            { src: 'https://images.unsplash.com/photo-1493857671505-72967e2e2760?w=1200&h=800&fit=crop', caption: 'Outdoor Garden Area' },
+            { src: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1200&h=800&fit=crop', caption: 'Latte Art' },
+            { src: 'https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=1200&h=800&fit=crop', caption: 'Premium Coffee Beans' },
+            { src: 'https://images.unsplash.com/photo-1559305616-3f99cd43e353?w=1200&h=800&fit=crop', caption: 'Cozy Corner' },
+            { src: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=1200&h=800&fit=crop', caption: 'Night Ambiance' }
+        ];
+
+        // ==================== NAVIGATION ====================
+        function toggleNav() {
+            document.getElementById('hamburger').classList.toggle('active');
+            document.getElementById('navLinks').classList.toggle('open');
+            document.getElementById('mobileOverlay').classList.toggle('active');
+        }
+
+        function closeNav() {
+            document.getElementById('hamburger').classList.remove('active');
+            document.getElementById('navLinks').classList.remove('open');
+            document.getElementById('mobileOverlay').classList.remove('active');
+        }
+
+        // ==================== HEADER SCROLL ====================
+        window.addEventListener('scroll', () => {
+            document.getElementById('header').classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // ==================== MENU TABS ====================
+        document.querySelectorAll('.menu-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                const target = tab.getAttribute('data-tab');
+                document.querySelectorAll('.menu-category').forEach(cat => {
+                    cat.classList.remove('active');
+                    if (cat.id === 'tab-' + target) {
+                        cat.classList.add('active');
+                        const cards = cat.querySelectorAll('.anim-fade-up, .anim-zoom-in, .anim-flip-up');
+                        cards.forEach((card, i) => {
+                            card.classList.remove('visible');
+                            setTimeout(() => card.classList.add('visible'), i * 100);
+                        });
+                    }
+                });
+            });
+        });
+
+        // ==================== LIGHTBOX ====================
+        let currentLightboxIndex = 0;
+        const lightbox = document.getElementById('lightbox');
+
+        function openLightbox(index) {
+            currentLightboxIndex = index;
+            updateLightboxImage();
+            document.body.classList.add('modal-open');
+            lightbox.classList.add('active');
+        }
+
+        function closeLightbox() {
+            document.body.classList.remove('modal-open');
+            lightbox.classList.remove('active');
+        }
+
+        function navigateLightbox(direction) {
+            currentLightboxIndex = (currentLightboxIndex + direction + galleryImages.length) % galleryImages.length;
+            updateLightboxImage();
+        }
+
+        function updateLightboxImage() {
+            const img = galleryImages[currentLightboxIndex];
+            document.getElementById('lightboxImg').src = img.src;
+            document.getElementById('lightboxImg').alt = img.caption;
+            document.getElementById('lightboxCounter').textContent = (currentLightboxIndex + 1) + ' / ' + galleryImages.length;
+        }
+
+        lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (lightbox.classList.contains('active')) closeLightbox();
+                if (document.getElementById('branchModal').classList.contains('active')) closeBranchModal();
+            }
+            if (lightbox.classList.contains('active')) {
+                if (e.key === 'ArrowLeft') navigateLightbox(-1);
+                if (e.key === 'ArrowRight') navigateLightbox(1);
+            }
+        });
+
+        // ==================== BRANCH MODAL ====================
+        function isBranchOpen(openHour, closeHour) {
+            const now = new Date();
+            const currentHour = now.getHours() + now.getMinutes() / 60;
+            return currentHour >= openHour && currentHour < closeHour;
+        }
+
+        function openModal(key) {
+            const d = branchData[key];
+            if (!d) return;
+
+            document.getElementById('mImg').src = d.img;
+            document.getElementById('mTitle').textContent = d.name;
+            document.getElementById('mAddress').textContent = d.address;
+
+            const open = isBranchOpen(d.openHour, d.closeHour);
+            document.getElementById('mHours').innerHTML = d.hoursText + ' <span class="' + (open ? 'open-badge' : 'closed-badge') + '">' + (open ? '● Buka' : '● Tutup') + '</span>';
+
+            const waMsg = encodeURIComponent('Halo ' + d.name + ', saya ingin booking tempat.');
+            const waUrl = 'https://wa.me/' + d.wa + '?text=' + waMsg;
+            document.getElementById('mWaLink').href = waUrl;
+            document.getElementById('mWaBtn').href = waUrl;
+
+            const phoneClean = d.phone.replace(/-/g, '');
+            document.getElementById('mPhoneLink').href = 'tel:' + phoneClean;
+            document.getElementById('mPhoneLink').textContent = d.phone;
+            document.getElementById('mPhoneBtn').href = 'tel:' + phoneClean;
+
+            document.getElementById('mMap').src = 'https://maps.google.com/maps?q=' + d.mapQ + '&output=embed';
+            document.getElementById('mMapsBtn').href = d.mapsUrl;
+
+            document.body.classList.add('modal-open');
+            document.getElementById('branchModal').classList.add('active');
+        }
+
+        function closeBranchModal() {
+            document.body.classList.remove('modal-open');
+            document.getElementById('branchModal').classList.remove('active');
+            setTimeout(() => { document.getElementById('mMap').src = ''; }, 350);
+        }
+
+        document.getElementById('branchModal').querySelector('.modal-close').addEventListener('click', closeBranchModal);
+        document.getElementById('branchModal').addEventListener('click', (e) => { if (e.target === document.getElementById('branchModal')) closeBranchModal(); });
+
+        // ==================== BOOKING FORM ====================
+        function handleBooking(e) {
+            e.preventDefault();
+            const name = document.getElementById('bookName').value.trim();
+            const phone = document.getElementById('bookPhone').value.trim();
+            const branch = document.getElementById('bookBranch').value;
+            const guests = document.getElementById('bookGuests').value;
+            const date = document.getElementById('bookDate').value;
+            const time = document.getElementById('bookTime').value;
+            const note = document.getElementById('bookNote').value.trim();
+
+            if (!name || !phone || !branch || !guests || !date || !time) {
+                alert('Mohon lengkapi semua data yang wajib diisi.');
+                return;
+            }
+
+            const dateObj = new Date(date);
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const formattedDate = dateObj.toLocaleDateString('id-ID', options);
+
+            let message = ` *RESERVASI TANATAP COFFEE*\n\n`;
+            message += `👤 Nama: ${name}\n📱 No. HP: ${phone}\n📍 Cabang: Tanatap ${branch}\n👥 Jumlah Tamu: ${guests}\n📅 Tanggal: ${formattedDate}\n🕐 Waktu: ${time}\n`;
+            if (note) message += `📝 Catatan: ${note}\n`;
+            message += `\nTerima kasih! 🙏`;
+
+            const branchKey = branch.toLowerCase() === 'semarang' ? 'semarang' : branch.toLowerCase();
+            const branchWa = branchData[branchKey] ? branchData[branchKey].wa : '6282111885102';
+            const waUrl = 'https://wa.me/' + branchWa + '?text=' + encodeURIComponent(message);
+
+            document.getElementById('bookingForm').style.display = 'none';
+            document.getElementById('bookingSuccess').classList.add('show');
+
+            setTimeout(() => { window.open(waUrl, '_blank'); }, 1500);
+            setTimeout(() => {
+                document.getElementById('bookingForm').style.display = 'flex';
+                document.getElementById('bookingSuccess').classList.remove('show');
+                document.getElementById('bookingForm').reset();
+            }, 5000);
+        }
+
+        document.getElementById('bookDate').setAttribute('min', new Date().toISOString().split('T')[0]);
+
+        // ==================== DARK/LIGHT THEME ====================
+        const savedTheme = localStorage.getItem('tanatap-theme') || 'light';
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.getElementById('themeToggle').textContent = '☀️';
+        }
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            if (current === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                document.getElementById('themeToggle').textContent = '🌙';
+                localStorage.setItem('tanatap-theme', 'light');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                document.getElementById('themeToggle').textContent = '☀️';
+                localStorage.setItem('tanatap-theme', 'dark');
+            }
+        }
+
+        // ==================== SCROLL ANIMATIONS ====================
+        const animObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+        document.querySelectorAll('.anim-fade-up, .anim-fade-left, .anim-fade-right, .anim-zoom-in, .anim-flip-up').forEach(el => animObserver.observe(el));
+
+        // ==================== INIT ====================
+        document.addEventListener('DOMContentLoaded', () => {
+            // Hero animations
+            document.querySelectorAll('.hero .anim-fade-up, .hero .anim-zoom-in').forEach((el, i) => {
+                setTimeout(() => el.classList.add('visible'), 300 + i * 200);
+            });
+
+            // Render reviews
+            renderReviews();
+        });
+    </script>
+</body>
+</html>
+
